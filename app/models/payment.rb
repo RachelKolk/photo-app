@@ -12,6 +12,8 @@ class Payment < ApplicationRecord
   end
 
   def process_payment
+    logger.info "Payment token: #{token}"
+    logger.info "Email: #{email}"
     customer = Stripe::Customer.create email: email, card: token
 
     Stripe::Charge.create customer: customer.id,
